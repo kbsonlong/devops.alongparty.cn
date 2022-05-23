@@ -50,3 +50,9 @@ jobs:
 
 ### 创建仓库Secrets变量
 ![](https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220523183149.png)
+
+### Github Page配置自定义域名
+```bash
+echo "<自定义域名>" >static/CNAME
+```
+
