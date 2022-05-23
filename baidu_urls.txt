@@ -1,1 +1,2 @@
+http://devops.alongparty.cn/istio%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/
 http://devops.alongparty.cn/github-actions%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2hugo%E5%8D%9A%E5%AE%A2/
