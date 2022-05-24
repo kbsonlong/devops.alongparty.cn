@@ -7,10 +7,10 @@
 ## Base info
 
 ```yaml
-- nickname: Lruihao
-  avatar: https://lruihao.cn/images/avatar.jpg
-  url: https://lruihao.cn
-  description: Lruihao's Note
+- nickname: 蜷缩的蜗牛
+  avatar: images/20220524130401.png
+  url: https://www.alongparty.cn
+  description: 运维自动化
 ```
 
 ## Friendly Reminder
