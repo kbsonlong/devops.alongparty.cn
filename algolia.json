@@ -1,0 +1,173 @@
+[
+    {
+        "type": "about",
+        "uri": "about",
+        "content": "Hey Welcome          Service Mesh           Check detailed stats  point_right  Sourcerer",
+        "objectID": "about",
+        "date": "2022-05-24T03:02:16.000Z",
+        "draft": false
+    },
+    {
+        "type": "friends",
+        "uri": "friends",
+        "content": "Base info nickname        avatar  images 20220524130401 png url  https   www alongparty cn description        Friendly Reminder      want exchange link  please leave comment above format   personal non commercial blogs   websites only    fa solid fa exclamation triangle   Website failure  stop maintenance improper content may unlinked  websites not respect people s labor achievements  reprint without source  malicious acts  please not exchange",
+        "objectID": "friends",
+        "date": "2022-05-23T14:21:42.000Z",
+        "description": "kbsonlong's friends",
+        "keywords": [
+            "Hugo",
+            "friends tempalate"
+        ],
+        "comment": false
+    },
+    {
+        "type": "offline",
+        "uri": "offline",
+        "content": "Hey Welcome          Service Mesh           Check detailed stats  point_right  Sourcerer",
+        "objectID": "offline",
+        "description": "离线 - 蜷缩的蜗牛",
+        "keywords": [
+            "PWA",
+            "offline",
+            "离线"
+        ]
+    },
+    {
+        "title": "Github Actions自动部署hugo博客",
+        "uri": "posts/Github Actions自动部署hugo博客",
+        "content": "Github Actions    mkdir  p  github workflows  touch hugo yaml        name  GitHub Pages Deploy Local REPOSITORY on  push  branches  master   Set branch deploy pull_request  jobs  deploy  runs on  ubuntu 20 04 concurrency  group      github workflow        github ref    steps  uses  actions checkout v3 with  submodules  true   Fetch Hugo themes  true recursive  fetch depth  1   Fetch history  GitInfo  Lastmod name  Setup Hugo uses  peaceiris actions hugo v2 with  hugo version   0 91 2  extended  true name  Build run  hugo   minify name  Deploy uses  peaceiris actions gh pages v3 with  githubtoken      secrets GITHUBTOKEN    publish_dir    public         name  CI         on  push    push      branches             master jobs  deploy  runs on  ubuntu 20 04 steps  uses  actions checkout v2 with  submodules  true   Fetch Hugo themes  true recursive  fetch depth  1   Fetch history  GitInfo  Lastmod name  Setup Hugo uses  peaceiris actions hugo v2 with  hugo version   latest  extended  true name  Build run  hugo   minify name  Deploy uses  peaceiris actions gh pages v3 with  personaltoken      secrets EXTERNALREPOSITORY_TOKEN    publish_dir    public external_repository  kbsonlong devops alongparty cn             githubtoken       GITHUBTOKEN         personal_token         secret     SSH   ssh keygen  t rsa  b 4096  C    git config user email    f gh pages  N      SSH     SSH     SSH     name  CI         on  push    push      branches             master jobs  deploy  runs on  ubuntu 20 04 steps  uses  actions checkout v2 with  submodules  true   Fetch Hugo themes  true recursive  fetch depth  1   Fetch history  GitInfo  Lastmod name  Setup Hugo uses  peaceiris actions hugo v2 with  hugo version   latest  extended  true name  Build run  hugo   minify name  Deploy PRIVATE KEY uses  peaceiris actions gh pages v3 with  cname  devops alongparty cn env  ACTIONSDEPLOYKEY      secrets HUGODEPLOYPRIVATE_KEY    EXTERNAL_REPOSITORY  kbsonlong devops alongparty cn PUBLISH_BRANCH  gh pages PUBLISH_DIR    public               ssh          ssh                GITHUB Personal TOKEN     Secrets   Github Page        echo     static CNAME",
+        "objectID": "posts/Github Actions自动部署hugo博客",
+        "subtitle": "",
+        "date": "2022-05-23T10:26:26.000Z",
+        "draft": false,
+        "author": "kbsonlong",
+        "authorLink": "",
+        "authorEmail": "",
+        "description": "",
+        "keywords": "",
+        "license": "",
+        "comment": true,
+        "weight": 0,
+        "tags": [
+            "github actions"
+        ],
+        "categories": [
+            "hugo"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "summary": "",
+        "resources": [
+            {
+                "name": "featured-image",
+                "src": "featured-image.jpg"
+            },
+            {
+                "name": "featured-image-preview",
+                "src": "featured-image-preview.jpg"
+            }
+        ],
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": false
+        },
+        "lightgallery": false,
+        "seo": {
+            "images": []
+        }
+    },
+    {
+        "title": "Istio性能测试",
+        "uri": "posts/Istio性能测试",
+        "content": "Istio",
+        "objectID": "posts/Istio性能测试",
+        "subtitle": "",
+        "date": "2022-05-23T14:06:41.000Z",
+        "draft": false,
+        "author": "",
+        "authorLink": "",
+        "authorEmail": "",
+        "description": "",
+        "keywords": "",
+        "license": "",
+        "comment": true,
+        "weight": 0,
+        "tags": [
+            "istio"
+        ],
+        "categories": [
+            "云原生"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "summary": "",
+        "resources": [
+            {
+                "name": "featured-image",
+                "src": "featured-image.jpg"
+            },
+            {
+                "name": "featured-image-preview",
+                "src": "featured-image-preview.jpg"
+            }
+        ],
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": false
+        },
+        "lightgallery": false,
+        "seo": {
+            "images": []
+        }
+    },
+    {
+        "title": "Istio防故障利器",
+        "uri": "posts/Istio防故障利器",
+        "content": "1   1 1                                                                                                                                cpu                                           tps qps                                                          1 2     1 2 1                                                                                                          1 2 2                                                                                                                      1 2 3                                                                                                            1     1                  59            1 2   1 2 1 http 1 2 1 1    istio   bookinfo                              1 2 1 1 1        1 2 1 1 1 1     cat envoyfilter local rate limit yaml apiVersion  networking istio io v1alpha3 kind  EnvoyFilter metadata  name  filter local ratelimit svc spec  workloadSelector  labels  app  productpage configPatches  applyTo  HTTP_FILTER match  listener  filterChain  filter  name   envoy filters network httpconnectionmanager  patch  operation  INSERT_BEFORE value  name  envoy filters http local_ratelimit typed_config    type   type googleapis com udpa type v1 TypedStruct typeurl  type googleapis com envoy extensions filters http localratelimit v3 LocalRateLimit value  statprefix  httplocalratelimiter token_bucket  max_tokens  10 tokensperfill  10 fill_interval  60s filter_enabled  runtimekey  localratelimitenabled default_value  numerator  100 denominator  HUNDRED filter_enforced  runtimekey  localratelimitenforced default_value  numerator  100 denominator  HUNDRED responseheadersto_add  append  false header  key  x local rate limit value   true  EOF kubectl apply  f envoyfilter local rate limit yaml  n istio              EnvoyFilter               envoy                 http filter      envoy filters http localratelimit type typeurl     statprefix          stat      tokenbucket      maxtokens         tokensperfill            fillinterval          filterenabled          filterenforced             responseheaderstoadd        append false     true     runtime_key     key                  root node01 45   go stress testing  c 10  n 10000  u http   192 168 229 134 30945 productpage          10     10000       request  form http url http   192 168 229 134 30945 productpage method GET headers map   data  verify statusCode timeout 30s debug false                                                                                                                 qps                                                                                                                             1s  7  2  761  2 94  124 68  1 98  3406 97  21 476  21 470 200 2 429 761 2s  10  5  1636  2 55  1788 46  1 98  3928 11  52 771  26 383 200 5 429 1636 3s  10  5  2962  1 70  1788 46  1 04  5871 68  76 639  25 545 200 5 429 2962 4s  10  5  4459  1 28  1788 46  1 04  7810 78  103 585  25 896 200 5 429 4459 429 Requests                                                     kubectl delete envoyfilter filter local ratelimit svc  n istio 1 2 1 1 1 2       ratelimit 1  cm cat ratelimit config yaml apiVersion  v1 kind  ConfigMap metadata  name  ratelimit config data  config yaml    domain  productpage ratelimit descriptors  key  PATH value    productpage  rate_limit  unit  minute requestsperunit  1 key  PATH rate_limit  unit  minute requestsperunit  100 EOF kubectl apply  f ratelimit config yaml  n istio         configmap               envoy v3        domain       envoyfilter     descriptors PATH               rate_limit         productpage  1  1      url 1  100    2      deployment cat ratelimit deploy yaml apiVersion  v1 kind  Service metadata  name  redis labels  app  redis spec  ports  name  redis port  6379 selector  app  redis apiVersion  apps v1 kind  Deployment metadata  name  redis spec  replicas  1 selector  matchLabels  app  redis template  metadata  labels  app  redis spec  containers  image  redis alpine imagePullPolicy  Always name  redis ports  name  redis containerPort  6379 restartPolicy  Always serviceAccountName     apiVersion  v1 kind  Service metadata  name  ratelimit labels  app  ratelimit spec  ports  name  http port port  8080 targetPort  8080 protocol  TCP name  grpc port port  8081 targetPort  8081 protocol  TCP name  http debug port  6070 targetPort  6070 protocol  TCP selector  app  ratelimit apiVersion  apps v1 kind  Deployment metadata  name  ratelimit spec  replicas  1 selector  matchLabels  app  ratelimit strategy  type  Recreate template  metadata  labels  app  ratelimit spec  containers  image  envoyproxy ratelimit 6f5de117   2021 01 08 imagePullPolicy  Always name  ratelimit command     bin ratelimit   env  name  LOG_LEVEL value  debug name  REDISSOCKETTYPE value  tcp name  REDIS_URL value  redis 6379 name  USE_STATSD value   false  name  RUNTIME_ROOT value   data name  RUNTIME_SUBDIRECTORY value  ratelimit ports  containerPort  8080 containerPort  8081 containerPort  6070 volumeMounts  name  config volume mountPath   data ratelimit config config yaml subPath  config yaml volumes  name  config volume configMap  n",
+        "objectID": "posts/Istio防故障利器",
+        "subtitle": "",
+        "date": "2022-05-23T15:05:25.000Z",
+        "draft": false,
+        "author": "",
+        "authorLink": "",
+        "authorEmail": "",
+        "description": "",
+        "keywords": "",
+        "license": "",
+        "comment": false,
+        "weight": 0,
+        "tags": [
+            "istio"
+        ],
+        "categories": [
+            "云原生"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "summary": "",
+        "resources": [
+            {
+                "name": "featured-image",
+                "src": "featured-image.jpg"
+            },
+            {
+                "name": "featured-image-preview",
+                "src": "featured-image-preview.jpg"
+            }
+        ],
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": false
+        },
+        "lightgallery": false,
+        "seo": {
+            "images": []
+        }
+    }
+]
