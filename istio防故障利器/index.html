@@ -1,4 +1,4 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Istio防故障利器 - 蜷缩的蜗牛</title><meta name=author content="kbsonlong"><meta name=author-link content><meta name=description content="云原生时代运维"><meta name=keywords content="istio"><meta itemprop=name content="Istio防故障利器"><meta itemprop=description content><meta itemprop=datePublished content="2022-05-23T23:05:25+08:00"><meta itemprop=dateModified content="2022-05-23T23:05:25+08:00"><meta itemprop=wordCount content="18142"><meta itemprop=image content="http://devops.alongparty.cn/logo.png"><meta itemprop=keywords content="istio,"><meta property="og:title" content="Istio防故障利器"><meta property="og:description" content><meta property="og:type" content="article"><meta property="og:url" content="http://devops.alongparty.cn/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/"><meta property="og:image" content="http://devops.alongparty.cn/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-05-23T23:05:25+08:00"><meta property="article:modified_time" content="2022-05-23T23:05:25+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://devops.alongparty.cn/logo.png"><meta name=twitter:title content="Istio防故障利器"><meta name=twitter:description content><meta name=application-name content="FixIt"><meta name=apple-mobile-web-app-title content="FixIt"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#252627"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=http://devops.alongparty.cn/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/><link rel=prev href=http://devops.alongparty.cn/istio%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Istio防故障利器","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/devops.alongparty.cn\/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8\/"},"genre":"posts","keywords":"istio","wordcount":18142,"url":"http:\/\/devops.alongparty.cn\/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8\/","datePublished":"2022-05-23T23:05:25+08:00","dateModified":"2022-05-23T23:05:25+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"kbsonlong"},"description":""}</script></head><body header-desktop=sticky header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper github-corner=right><div class=header-title><a href=/ title=蜷缩的蜗牛><img class="lazyload logo" src=/svg/loading.min.svg data-src=https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png data-srcset="https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 1.5x, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 2x" data-sizes=auto alt=蜷缩的蜗牛 title=蜷缩的蜗牛><span class=header-title-text>蜷缩的蜗牛</span></a><span class=header-subtitle></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/posts/><i class="fa-solid fa-archive fa-fw fa-sm"></i> 文章</a></li><li class=menu-item><a class=menu-link href=/categories/><i class="fa-solid fa-th fa-fw fa-sm"></i> 分类</a></li><li class=menu-item><a class=menu-link href=/tags/><i class="fa-solid fa-tags fa-fw fa-sm"></i> 标签</a></li><li class=menu-item><a class=menu-link href=/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm"></i> 友链</a></li><li class=menu-item><a class=menu-link href=/about/><i class="fa-solid fa-info-circle fa-fw fa-sm"></i> 关于</a></li><li class="menu-item d-none-desktop text-center"><a class=menu-link href=https://github.com/kbsonlong/ title=GitHub rel="noopener noreffer" target=_blank><i class="fa-brands fa-github fa-fw"></i></a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down"></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Istio防故障利器 - 蜷缩的蜗牛</title><meta name=author content="kbsonlong"><meta name=author-link content><meta name=description content="云原生时代运维"><meta name=keywords content="istio"><meta itemprop=name content="Istio防故障利器"><meta itemprop=description content><meta itemprop=datePublished content="2022-05-23T23:05:25+08:00"><meta itemprop=dateModified content="2022-05-23T23:05:25+08:00"><meta itemprop=wordCount content="18118"><meta itemprop=image content="http://devops.alongparty.cn/logo.png"><meta itemprop=keywords content="istio,"><meta property="og:title" content="Istio防故障利器"><meta property="og:description" content><meta property="og:type" content="article"><meta property="og:url" content="http://devops.alongparty.cn/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/"><meta property="og:image" content="http://devops.alongparty.cn/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-05-23T23:05:25+08:00"><meta property="article:modified_time" content="2022-05-23T23:05:25+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://devops.alongparty.cn/logo.png"><meta name=twitter:title content="Istio防故障利器"><meta name=twitter:description content><meta name=application-name content="FixIt"><meta name=apple-mobile-web-app-title content="FixIt"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#252627"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=http://devops.alongparty.cn/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/><link rel=prev href=http://devops.alongparty.cn/istio%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Istio防故障利器","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/devops.alongparty.cn\/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8\/"},"genre":"posts","keywords":"istio","wordcount":18118,"url":"http:\/\/devops.alongparty.cn\/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8\/","datePublished":"2022-05-23T23:05:25+08:00","dateModified":"2022-05-23T23:05:25+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"kbsonlong"},"description":""}</script></head><body header-desktop=sticky header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper github-corner=right><div class=header-title><a href=/ title=蜷缩的蜗牛><img class="lazyload logo" src=/svg/loading.min.svg data-src=https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png data-srcset="https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 1.5x, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 2x" data-sizes=auto alt=蜷缩的蜗牛 title=蜷缩的蜗牛><span class=header-title-text>蜷缩的蜗牛</span></a><span class=header-subtitle></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/posts/><i class="fa-solid fa-archive fa-fw fa-sm"></i> 文章</a></li><li class=menu-item><a class=menu-link href=/categories/><i class="fa-solid fa-th fa-fw fa-sm"></i> 分类</a></li><li class=menu-item><a class=menu-link href=/tags/><i class="fa-solid fa-tags fa-fw fa-sm"></i> 标签</a></li><li class=menu-item><a class=menu-link href=/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm"></i> 友链</a></li><li class=menu-item><a class=menu-link href=/about/><i class="fa-solid fa-info-circle fa-fw fa-sm"></i> 关于</a></li><li class="menu-item d-none-desktop text-center"><a class=menu-link href=https://github.com/kbsonlong/ title=GitHub rel="noopener noreffer" target=_blank><i class="fa-brands fa-github fa-fw"></i></a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down"></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
 <a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw"></i></a>
 <a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw"></i></a>
 <span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin"></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw"></i></li></ul></nav></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=蜷缩的蜗牛><img class="lazyload logo" src=/svg/loading.min.svg data-src=https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png data-srcset="https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 1.5x, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 2x" data-sizes=auto alt=https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png title=https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png><span class=header-title-text>蜷缩的蜗牛</span></a><span class=header-subtitle></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
@@ -7,7 +7,7 @@
 <span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/posts/><i class="fa-solid fa-archive fa-fw fa-sm"></i> 文章</a></li><li class=menu-item><a class=menu-link href=/categories/><i class="fa-solid fa-th fa-fw fa-sm"></i> 分类</a></li><li class=menu-item><a class=menu-link href=/tags/><i class="fa-solid fa-tags fa-fw fa-sm"></i> 标签</a></li><li class=menu-item><a class=menu-link href=/friends/ title=友情链接><i class="fa-solid fa-users fa-fw fa-sm"></i> 友链</a></li><li class=menu-item><a class=menu-link href=/about/><i class="fa-solid fa-info-circle fa-fw fa-sm"></i> 关于</a></li><li class="menu-item d-none-desktop text-center"><a class=menu-link href=https://github.com/kbsonlong/ title=GitHub rel="noopener noreffer" target=_blank><i class="fa-brands fa-github fa-fw"></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw"></i></li><li class="menu-item language"><span title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down"></i></span>
 <select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom></aside><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Istio防故障利器</h1><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><i class="fa-solid fa-user-circle"></i></span></span>
 <span class=post-category>收录于 <a href=/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;云原生</a></span></div><div class=post-meta-line><span title="2022-05-23 23:05:25"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-05-23>2022-05-23</time>
-</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 18142 字&nbsp;
+</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 18118 字&nbsp;
 <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 37 分钟&nbsp;</div></div><div class="details toc" id=toc-static kept=false><div class="details-summary toc-title"><span>目录</span>
 <span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#11什么是限流>1.1什么是限流</a></li><li><a href=#12限流算法>1.2限流算法</a><ul><li><a href=#122令牌桶算法>1.2.2令牌桶算法</a></li><li><a href=#123计数器算法>1.2.3计数器算法</a></li></ul></li><li><a href=#12实操>1.2实操</a><ul><li><a href=#121-http>1.2.1 http</a><ul><li><a href=#1211单集群>1.2.1.1单集群</a><ul><li><a href=#12111集群内服务限流>1.2.1.1.1集群内服务限流</a><ul><li><a href=#121111本地限流>1.2.1.1.1.1本地限流</a></li><li><a href=#121112全局限流>1.2.1.1.1.2全局限流</a></li></ul></li></ul></li></ul></li></ul></li></ul></nav></div></div><div class=content id=content><h1 id=1限流>1限流</h1><h2 id=11什么是限流>1.1什么是限流</h2><p>​ 举个例子，比如我们有个桶，桶里有两个开关，一个往外出水，一个网内注水，当出水的速度慢于注水的速度时，到一定时间水就会从桶里溢出。如果我们限制注水速率，就可以防止水从桶里溢出，这就是限流。</p><p>​ 具体到软件层面，我们把请求速率看做是注水，把系统cpu，内存等资源看做是放水，当请求速率过快，消耗太多资源时系统就可能崩溃。软件限流就是限制tps或qps指标，以达到保护系统的目的，虽然可能部分用户无法服务，但是系统整体还是健康的，还可以对外部提供服务，不是整体挂掉。</p><h2 id=12限流算法>1.2限流算法</h2><p>1.2.1漏桶算法
 就像一个漏斗以下，下面小，上面大。漏桶流出的速率被限制在比较小的范围，当漏桶满时，漏桶就会溢出，进来的请求就会被抛弃掉。特别是应对突发流量，漏桶的速率是恒定的，这样可以有效防止应突发流量导致系统崩溃。</p><h3 id=122令牌桶算法>1.2.2令牌桶算法</h3><p>令牌桶算法的原理，关键在令牌，它是指往桶里以一个不变的速率放入令牌，当有请求时，如果桶里有令牌，请求就消费一个令牌，请求继续进行；当请求到来，桶里没有令牌时，请求就会被抛弃掉，拒绝服务；当桶里的令牌满时，令牌就会被抛弃掉。</p><h3 id=123计数器算法>1.2.3计数器算法</h3><p>计数器算法是指一段时间设置一个计数器，当有请求时计数器就加一，请求继续进行；在技术器时间范围内，当计数器数值超过指定值，请求就被拒绝；当时间范围结束，就重置计数器。技术器算法有个缺陷，就是如果计数器时间是1分钟，当前1秒来了大量请求，讲技术器用完了，后续59秒时间就没法提供服务。</p><h2 id=12实操>1.2实操</h2><h3 id=121-http>1.2.1 http</h3><h4 id=1211单集群>1.2.1.1单集群</h4><p>istio部署和bookinfo实例部署大家自行完成，都看这种深度的文章了这个应该不是事。</p><h5 id=12111集群内服务限流>1.2.1.1.1集群内服务限流</h5><h6 id=121111本地限流>1.2.1.1.1.1本地限流</h6><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
@@ -3950,190 +3950,402 @@ cluster1,cluster2部署mysql</p><div class=highlight><div class=chroma><table cl
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=l>EOF</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=l>kubectl apply -f  dr-httpd-distribute-outside.yaml -n istio</span><span class=w>
-</span></span></span></code></pre></td></tr></table></div></div><p>这里创建了productpage的dr，localityLbSetting表示使用按地理位置的负载均衡。enabled设置为true表示启用。distribute用来配置负载分布规则。from是连接productpage这个微服务的downstream所在的区域信息，to表示upstream的区域信息。*表示任意。这里我们配置了三条规则.</p><p>进入ratings容器，访问httpd.vm.demo</p><p>[root@node01 locality]# kubectl exec -it -n istio ratings-v1-fbdbfdc5b-dbz9g &ndash; /bin/bash
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-146 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-146 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-146 welcome
-4跨地域failover
+</span></span></span></code></pre></td></tr></table></div></div><p>这里创建了productpage的dr，localityLbSetting表示使用按地理位置的负载均衡。enabled设置为true表示启用。distribute用来配置负载分布规则。from是连接productpage这个微服务的downstream所在的区域信息，to表示upstream的区域信息。*表示任意。这里我们配置了三条规则.</p><p>进入ratings容器，访问httpd.vm.demo</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@node01 locality<span class=o>]</span><span class=c1># kubectl exec -it -n istio ratings-v1-fbdbfdc5b-dbz9g -- /bin/bash</span>
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>146</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>146</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>146</span> welcome
+</span></span></code></pre></td></tr></table></div></div><p>4跨地域failover
 4.1什么是跨地域failover
 istio微服务部署在多个数据中心中，这些数据中心可能在不同地域，当某一地istio集群挂掉时自动将流量切换至另一地，这就是跨地域failover。跨地域failover主要用来容灾，如地震等因数导致的某地服务局部不可用或整体不可用。我这里介绍的failover包括集群内的服务的failover，还有就是集群外的服务的failover。可以对集群外服务标注locolity属性，来实现failover。</p><p>4.2实操
-4.2.1集群内服务failover
-cat &#171; EOF > dr-productpage-failover.yaml
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-name: productpage
-spec:
-host: productpage.istio.svc.cluster.local
-subsets:</p><ul><li>name: v1
-labels:
-version: v1
-trafficPolicy:
-loadBalancer:
-localityLbSetting:
-enabled: true
-failover:
-- from: us-central1
-to: us-central2
-- from: us-central2
-to: us-central1
-- from: us-central3
-to: us-central1
-outlierDetection:
-consecutive5xxErrors: 1
-interval: 5m
-baseEjectionTime: 15m
-EOF</li></ul><p>kubectl apply -f dr-productpage-failover.yaml -n istio
-这里创建了productpage的dr，localityLbSetting表示使用按地理位置的负载均衡。enabled设置为true表示启用。failover表示故障恢复配置。from表示来自哪里的故障，to表示重新连接到哪里。这里我们配置了三条规则，当cluster1有故障时恢复到cluster2，当cluster2有故障时恢复到cluster3，当cluster3有故障时恢复到cluster1.这里我们能容忍两个集群故障。</p><p>down掉cluster2</p><p>访问： http://192.168.229.137:32498/productpage</p><p>局部失败，productpage微服务因为有failover所以没报错，reviews微服务没有failover，所以cluster2 down掉，因为是轮训的当请求cluster2是就会失败</p><p>下面，我们把details，reviews ，ratings也加上failover</p><p>cat &#171; EOF > dr-reviews-failover.yaml
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-name: reviews
-spec:
-host: reviews.istio.svc.cluster.local
-trafficPolicy:
-loadBalancer:
-localityLbSetting:
-enabled: true
-failover:
-- from: us-central1
-to: us-central2
-- from: us-central2
-to: us-central1
-- from: us-central3
-to: us-central1
-outlierDetection:
-consecutive5xxErrors: 1
-interval: 5m
-baseEjectionTime: 15m
-EOF</p><p>kubectl apply -f dr-reviews-failover.yaml -n istio
-配置reviews的failover</p><p>cat &#171; EOF > dr-details-failover.yaml
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-name: details
-spec:
-host: details.istio.svc.cluster.local
-trafficPolicy:
-loadBalancer:
-localityLbSetting:
-enabled: true
-failover:
-- from: us-central1
-to: us-central2
-- from: us-central2
-to: us-central1
-- from: us-central3
-to: us-central1
-outlierDetection:
-consecutive5xxErrors: 1
-interval: 5m
-baseEjectionTime: 15m
-EOF</p><p>kubectl apply -f dr-details-failover.yaml -n istio
-配置details的failover</p><p>cat &#171; EOF > dr-reviews-failover.yaml
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-name: ratings
-spec:
-host: ratings.istio.svc.cluster.local
-trafficPolicy:
-loadBalancer:
-localityLbSetting:
-enabled: true
-failover:
-- from: us-central1
-to: us-central2
-- from: us-central2
-to: us-central1
-- from: us-central3
-to: us-central1
-outlierDetection:
-consecutive5xxErrors: 1
-interval: 5m
-baseEjectionTime: 15m
-EOF</p><p>kubectl apply -f dr-reviews-failover.yaml -n istio
-配置ratings的failover</p><p>不在报错，因为虽然cluster2 down掉了，但是每个微服务都有failover</p><p>4.2.2集群外服务failover
+4.2.1集群内服务failover</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=l>cat &lt;&lt; EOF &gt; dr-productpage-failover.yaml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>networking.istio.io/v1alpha3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>DestinationRule</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>productpage</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>host</span><span class=p>:</span><span class=w> </span><span class=l>productpage.istio.svc.cluster.local</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>subsets</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>trafficPolicy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>loadBalancer</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>localityLbSetting</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>failover</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>outlierDetection</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>consecutive5xxErrors</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>5m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>baseEjectionTime</span><span class=p>:</span><span class=w> </span><span class=l>15m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>EOF</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>kubectl apply -f dr-productpage-failover.yaml -n istio</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>这里创建了productpage的dr，localityLbSetting表示使用按地理位置的负载均衡。enabled设置为true表示启用。failover表示故障恢复配置。from表示来自哪里的故障，to表示重新连接到哪里。这里我们配置了三条规则，当cluster1有故障时恢复到cluster2，当cluster2有故障时恢复到cluster3，当cluster3有故障时恢复到cluster1.这里我们能容忍两个集群故障。</p><p>down掉cluster2</p><p>访问： http://192.168.229.137:32498/productpage</p><p>局部失败，productpage微服务因为有failover所以没报错，reviews微服务没有failover，所以cluster2 down掉，因为是轮训的当请求cluster2是就会失败</p><p>下面，我们把details，reviews ，ratings也加上failover</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=l>cat &lt;&lt; EOF &gt; dr-reviews-failover.yaml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>networking.istio.io/v1alpha3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>DestinationRule</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>reviews</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>host</span><span class=p>:</span><span class=w> </span><span class=l>reviews.istio.svc.cluster.local</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>trafficPolicy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>loadBalancer</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>localityLbSetting</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>failover</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>outlierDetection</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>consecutive5xxErrors</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>5m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>baseEjectionTime</span><span class=p>:</span><span class=w> </span><span class=l>15m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>EOF</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>kubectl apply -f dr-reviews-failover.yaml -n istio</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>配置reviews的failover</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=l>cat &lt;&lt; EOF &gt; dr-details-failover.yaml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>networking.istio.io/v1alpha3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>DestinationRule</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>details</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>host</span><span class=p>:</span><span class=w> </span><span class=l>details.istio.svc.cluster.local</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>trafficPolicy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>loadBalancer</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>localityLbSetting</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>failover</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>outlierDetection</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>consecutive5xxErrors</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>5m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>baseEjectionTime</span><span class=p>:</span><span class=w> </span><span class=l>15m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>EOF</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>kubectl apply -f dr-details-failover.yaml -n istio</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>配置details的failover</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=l>cat &lt;&lt; EOF &gt; dr-reviews-failover.yaml </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>networking.istio.io/v1alpha3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>DestinationRule</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>ratings</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>host</span><span class=p>:</span><span class=w> </span><span class=l>ratings.istio.svc.cluster.local</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>trafficPolicy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>loadBalancer</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>localityLbSetting</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>failover</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>outlierDetection</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>consecutive5xxErrors</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>5m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>baseEjectionTime</span><span class=p>:</span><span class=w> </span><span class=l>15m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>EOF</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>kubectl apply -f dr-reviews-failover.yaml -n istio</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>配置ratings的failover</p><p>不在报错，因为虽然cluster2 down掉了，但是每个微服务都有failover</p><p>4.2.2集群外服务failover
 4.2.2.1部署两个httpd服务的vm
-比较复杂，有需要的同学可以加我微信联系我，略</p><p>3.2.2.2实操
-kubectl apply -f se-httpd.yaml -n vm-httpd</p><p>cat &#171; EOF > se-httpd.yaml
-apiVersion: networking.istio.io/v1beta1
-kind: ServiceEntry
-metadata:
-name: httpd-se
-spec:
-hosts:</p><ul><li>httpd.vm.demo
-addresses:</li><li>192.168.229.11
-location: MESH_INTERNAL
-ports:</li><li>number: 80
-name: http-httpd
-protocol: TCP
-targetPort: 80
-resolution: STATIC
-workloadSelector:
-labels:
-app: httpd
-type: vm
-EOF</li></ul><p>kubectl apply -f se-httpd.yaml -n vm-httpd</p><p>创建访问虚拟机服务的serviceentry</p><p>cat &#171; EOF > dr-httpd-locality-failover.yaml
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-name: dr-httpd
-spec:
-host: httpd.vm.demo
-trafficPolicy:
-loadBalancer:
-localityLbSetting:
-enabled: true
-failover:
-- from: us-central1/z1/sz01
-to: us-central2/z2/sz02
-- from: us-central2/z2/sz02
-to: us-central1/z1/sz01
-outlierDetection:
-consecutive5xxErrors: 1
-interval: 1s
-baseEjectionTime: 1m</p><p>kubectl apply -f dr-httpd-locality-failover.yaml -n vm-httpd
-设置failover</p><p>访问：先是两个集群都在，然后down掉一个vm，他就连到另一个vm上去了</p><p>[root@node01 locality]# kubectl exec -it -n istio ratings-v1-fbdbfdc5b-dbz9g &ndash; /bin/bash
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-146 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-146 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-146 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-146 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-curl: (56) Recv failure: Connection reset by peer
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome
-node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
-147 welcome</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2022-05-23 23:05:25">更新于 2022-05-23</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a href=/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=http://devops.alongparty.cn/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/ data-title=Istio防故障利器 data-hashtags=istio><i class="fa-brands fa-twitter fa-fw"></i></a>
+比较复杂，有需要的同学可以加我微信联系我，略</p><p>3.2.2.2实操</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=l>cat &lt;&lt; EOF &gt; se-httpd.yaml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>networking.istio.io/v1beta1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>ServiceEntry</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>httpd-se</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>hosts</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=l>httpd.vm.demo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>addresses</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=m>192.168.229.11</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>location</span><span class=p>:</span><span class=w> </span><span class=l>MESH_INTERNAL</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>number</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>http-httpd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class=l>TCP</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>targetPort</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>resolution</span><span class=p>:</span><span class=w> </span><span class=l>STATIC</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>workloadSelector</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>httpd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>vm</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>EOF</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>kubectl apply -f se-httpd.yaml -n vm-httpd </span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>创建访问虚拟机服务的serviceentry</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=l>cat &lt;&lt; EOF &gt; dr-httpd-locality-failover.yaml </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>networking.istio.io/v1alpha3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>DestinationRule</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>dr-httpd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>host</span><span class=p>:</span><span class=w> </span><span class=l>httpd.vm.demo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>trafficPolicy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>loadBalancer</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>localityLbSetting</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>failover</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central1/z1/sz01</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central2/z2/sz02</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>from</span><span class=p>:</span><span class=w> </span><span class=l>us-central2/z2/sz02</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>to</span><span class=p>:</span><span class=w> </span><span class=l>us-central1/z1/sz01</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>outlierDetection</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>consecutive5xxErrors</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>1s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>baseEjectionTime</span><span class=p>:</span><span class=w> </span><span class=l>1m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>kubectl apply -f dr-httpd-locality-failover.yaml -n vm-httpd</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>设置failover</p><p>访问：先是两个集群都在，然后down掉一个vm，他就连到另一个vm上去了</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@node01 locality<span class=o>]</span><span class=c1># kubectl exec -it -n istio ratings-v1-fbdbfdc5b-dbz9g -- /bin/bash</span>
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>146</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>146</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>146</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>146</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl>curl: <span class=o>(</span>56<span class=o>)</span> Recv failure: Connection reset by peer
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span><span class=line><span class=cl>node@ratings-v1-fbdbfdc5b-dbz9g:/opt/microservices$ curl httpd.vm.demo
+</span></span><span class=line><span class=cl><span class=m>147</span> welcome
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2022-05-23 23:05:25">更新于 2022-05-23</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a href=/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=http://devops.alongparty.cn/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/ data-title=Istio防故障利器 data-hashtags=istio><i class="fa-brands fa-twitter fa-fw"></i></a>
 <a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=http://devops.alongparty.cn/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/ data-hashtag=istio><i class="fa-brands fa-facebook-square fa-fw"></i></a>
 <a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=http://devops.alongparty.cn/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/ data-title=Istio防故障利器 data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a>
 <a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=http://devops.alongparty.cn/istio%E9%98%B2%E6%95%85%E9%9A%9C%E5%88%A9%E5%99%A8/ data-title=Istio防故障利器><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a>
