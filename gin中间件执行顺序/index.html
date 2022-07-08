@@ -9,13 +9,13 @@
 <span class=post-category>收录于 <a href=/categories/golang/><i class="fa-regular fa-folder fa-fw"></i>&nbsp;golang</a></span></div><div class=post-meta-line><span title="2022-07-08 18:00:26"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-07-08>2022-07-08</time>
 </span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1234 字&nbsp;
 <i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div></div><div class="details toc" id=toc-static kept=false><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#初始化demo项目>初始化demo项目</a></li><li><a href=#middlewaremiddlego>middleware/middle.go</a></li><li><a href=#routersroutergo>routers/router.go</a></li><li><a href=#maingo>main.go</a></li><li><a href=#运行测试>运行测试</a></li><li><a href=#调整中间件use顺序>调整中间件Use顺序</a></li><li><a href=#注释第三个中间件next>注释第三个中间件Next</a></li><li><a href=#总结>总结</a></li></ul></nav></div></div><div class=content id=content><h2 id=初始化demo项目>初始化demo项目</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#初始化demo项目>初始化demo项目</a><ul><li><a href=#middlewaremiddlego>middleware/middle.go</a></li><li><a href=#routersroutergo>routers/router.go</a></li><li><a href=#maingo>main.go</a></li></ul></li><li><a href=#运行测试>运行测试</a><ul><li><a href=#调整中间件use顺序>调整中间件Use顺序</a></li><li><a href=#注释第三个中间件next>注释第三个中间件Next</a></li></ul></li><li><a href=#总结>总结</a></li></ul></li></ul></nav></div></div><div class=content id=content><h3 id=初始化demo项目>初始化demo项目</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mkdir -p gin-middleware-demo
 </span></span><span class=line><span class=cl><span class=nb>cd</span> gin-middleware-demo
 </span></span><span class=line><span class=cl>go mod init github.com/kbsonlong/gin-middleware-demo
-</span></span></code></pre></td></tr></table></div></div><h2 id=middlewaremiddlego>middleware/middle.go</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></code></pre></td></tr></table></div></div><h4 id=middlewaremiddlego>middleware/middle.go</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -85,7 +85,7 @@
 </span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;第三个 gin 中间件返回内容:&#34;</span> <span class=o>+</span> <span class=nx>time</span><span class=p>.</span><span class=nf>Now</span><span class=p>().</span><span class=nf>String</span><span class=p>())</span>
 </span></span><span class=line><span class=cl>	<span class=p>}</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h2 id=routersroutergo>routers/router.go</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></code></pre></td></tr></table></div></div><h4 id=routersroutergo>routers/router.go</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -106,7 +106,7 @@
 </span><span class=lnt>19
 </span><span class=lnt>20
 </span><span class=lnt>21
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-golang data-lang=golang><span class=line><span class=cl><span class=kn>package</span> <span class=nx>routers</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>routers</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/gin-gonic/gin&#34;</span>
@@ -127,7 +127,7 @@
 </span></span><span class=line><span class=cl>	<span class=p>})</span>
 </span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>r</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h2 id=maingo>main.go</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></code></pre></td></tr></table></div></div><h4 id=maingo>main.go</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -139,7 +139,7 @@
 </span><span class=lnt>10
 </span><span class=lnt>11
 </span><span class=lnt>12
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-golang data-lang=golang><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/kbsonlong/gin-middleware-demo/routers&#34;</span>
@@ -151,7 +151,7 @@
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>	<span class=nx>router</span><span class=p>.</span><span class=nf>Run</span><span class=p>()</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h2 id=运行测试>运行测试</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><h3 id=运行测试>运行测试</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>go mod tidy
 </span></span><span class=line><span class=cl>go run main.go
@@ -189,7 +189,7 @@
 </span></span><span class=line><span class=cl>第三个 gin 中间件返回内容:2022-07-08 17:18:57.499295 +0800 CST m=+3.029589876
 </span></span><span class=line><span class=cl>第二个 gin 中间件返回内容:2022-07-08 17:18:57.499298 +0800 CST m=+3.029593335
 </span></span><span class=line><span class=cl>第一个 gin 中间件返回内容:2022-07-08 17:18:57.4993 +0800 CST m=+3.029594876
-</span></span></code></pre></td></tr></table></div></div><h2 id=调整中间件use顺序>调整中间件Use顺序</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><h4 id=调整中间件use顺序>调整中间件Use顺序</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -215,7 +215,7 @@
 </span></span><span class=line><span class=cl>第二个 gin 中间件返回内容:2022-07-08 17:20:57.702305 +0800 CST m=+2.568210460
 </span></span><span class=line><span class=cl>第三个 gin 中间件返回内容:2022-07-08 17:20:57.702308 +0800 CST m=+2.568214043
 </span></span><span class=line><span class=cl>第一个 gin 中间件返回内容:2022-07-08 17:20:57.702311 +0800 CST m=+2.568216293
-</span></span></code></pre></td></tr></table></div></div><p>可以看到第三个中间件在第二个中间件之前执行</p><h2 id=注释第三个中间件next>注释第三个中间件Next</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p>可以看到第三个中间件在第二个中间件之前执行</p><h4 id=注释第三个中间件next>注释第三个中间件Next</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -243,7 +243,7 @@
 </span></span><span class=line><span class=cl>开始执行第二个 gin 中间件:2022-07-08 17:22:43.13313 +0800 CST m=+4.062078210
 </span></span><span class=line><span class=cl>第二个 gin 中间件返回内容:2022-07-08 17:22:43.133203 +0800 CST m=+4.062151335
 </span></span><span class=line><span class=cl>第一个 gin 中间件返回内容:2022-07-08 17:22:43.133205 +0800 CST m=+4.062153460
-</span></span></code></pre></td></tr></table></div></div><h2 id=总结>总结</h2><p>Gin中间件的调用顺序与Use顺序有关，代码运行顺序和Next前后顺序有关。</p><ul><li>Next之前代码先进先出</li><li>Next之后代码后进先出</li><li>没有引用Next代码直接运行</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2022-07-08 18:00:26">更新于 2022-07-08</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a href=/gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=http://devops.alongparty.cn/gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/ data-title=了解Gin中间件执行顺序 data-hashtags=Gin><i class="fa-brands fa-twitter fa-fw"></i></a>
+</span></span></code></pre></td></tr></table></div></div><h3 id=总结>总结</h3><p>Gin中间件的调用顺序与Use顺序有关，代码运行顺序和Next前后顺序有关。</p><ul><li>Next之前代码先进先出</li><li>Next之后代码后进先出</li><li>没有引用Next代码直接运行</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2022-07-08 18:00:26">更新于 2022-07-08</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a href=/gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=http://devops.alongparty.cn/gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/ data-title=了解Gin中间件执行顺序 data-hashtags=Gin><i class="fa-brands fa-twitter fa-fw"></i></a>
 <a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=http://devops.alongparty.cn/gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/ data-hashtag=Gin><i class="fa-brands fa-facebook-square fa-fw"></i></a>
 <a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=http://devops.alongparty.cn/gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/ data-title=了解Gin中间件执行顺序 data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a>
 <a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=http://devops.alongparty.cn/gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/ data-title=了解Gin中间件执行顺序><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a>
