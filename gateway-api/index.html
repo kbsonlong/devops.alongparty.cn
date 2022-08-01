@@ -1,0 +1,196 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>通过Gateway API不断演变的Kubernetes网络 - 蜷缩的蜗牛</title><meta name=author content="kbsonlong"><meta name=author-link content><meta name=description content="Ingress 资源是 Kubernetes 众多成功故事之一。它创建了一个不同的 Ingress 控制器生态系统，这些控制器以标准化和一致的方式在成千上万的集群中使用。这种标准化帮助用户采用"><meta name=keywords content="云原生,运维,SRE,DEVOPS"><meta itemprop=name content="通过Gateway API不断演变的Kubernetes网络"><meta itemprop=description content="Ingress 资源是 Kubernetes 众多成功故事之一。它创建了一个不同的 Ingress 控制器生态系统，这些控制器以标准化和一致的方式在成千上万的集群中使用。这种标准化帮助用户采用"><meta itemprop=datePublished content="2022-07-29T15:54:52+08:00"><meta itemprop=dateModified content="2022-07-29T15:54:52+08:00"><meta itemprop=wordCount content="2258"><meta itemprop=image content="http://devops.alongparty.cn/logo.png"><meta itemprop=keywords content><meta property="og:title" content="通过Gateway API不断演变的Kubernetes网络"><meta property="og:description" content="Ingress 资源是 Kubernetes 众多成功故事之一。它创建了一个不同的 Ingress 控制器生态系统，这些控制器以标准化和一致的方式在成千上万的集群中使用。这种标准化帮助用户采用"><meta property="og:type" content="article"><meta property="og:url" content="http://devops.alongparty.cn/gateway-api/"><meta property="og:image" content="http://devops.alongparty.cn/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-07-29T15:54:52+08:00"><meta property="article:modified_time" content="2022-07-29T15:54:52+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://devops.alongparty.cn/logo.png"><meta name=twitter:title content="通过Gateway API不断演变的Kubernetes网络"><meta name=twitter:description content="Ingress 资源是 Kubernetes 众多成功故事之一。它创建了一个不同的 Ingress 控制器生态系统，这些控制器以标准化和一致的方式在成千上万的集群中使用。这种标准化帮助用户采用"><meta name=application-name content="FixIt"><meta name=apple-mobile-web-app-title content="FixIt"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#252627"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=http://devops.alongparty.cn/gateway-api/><link rel=prev href=http://devops.alongparty.cn/kubebuilder%E5%BC%80%E5%8F%91operator/><link rel=next href=http://devops.alongparty.cn/%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%BC%B9%E6%80%A7%E4%BC%B8%E7%BC%A9%E5%92%8C%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%BE/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"通过Gateway API不断演变的Kubernetes网络","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/devops.alongparty.cn\/gateway-api\/"},"genre":"posts","wordcount":2258,"url":"http:\/\/devops.alongparty.cn\/gateway-api\/","datePublished":"2022-07-29T15:54:52+08:00","dateModified":"2022-07-29T15:54:52+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"kbsonlong"},"description":""}</script></head><body header-desktop=sticky header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper github-corner=right><div class=header-title><a href=/ title=蜷缩的蜗牛><img class="lazyload logo" src=/svg/loading.min.svg data-src=https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png data-srcset="https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 1.5x, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 2x" data-sizes=auto alt=蜷缩的蜗牛 title=蜷缩的蜗牛><span class=header-title-text>蜷缩的蜗牛</span></a><span class=header-subtitle></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/posts/><i class='fa-solid fa-archive fa-fw fa-sm'></i> 文章</a></li><li class=menu-item><a class=menu-link href=/categories/><i class='fa-solid fa-th fa-fw fa-sm'></i> 分类</a></li><li class=menu-item><a class=menu-link href=/tags/><i class='fa-solid fa-tags fa-fw fa-sm'></i> 标签</a></li><li class=menu-item><a class=menu-link href=/friends/ title=友情链接><i class='fa-solid fa-users fa-fw fa-sm'></i> 友链</a></li><li class=menu-item><a class=menu-link href=/about/><i class='fa-solid fa-info-circle fa-fw fa-sm'></i> 关于</a></li><li class="menu-item d-none-desktop text-center"><a class=menu-link href=https://github.com/kbsonlong/ title=GitHub rel="noopener noreffer" target=_blank><i class='fa-brands fa-github fa-fw'></i></a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down"></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item search" id=search-desktop><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin"></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw"></i></li></ul></nav></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=蜷缩的蜗牛><img class="lazyload logo" src=/svg/loading.min.svg data-src=https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png data-srcset="https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 1.5x, https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png 2x" data-sizes=auto alt=https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png title=https://raw.githubusercontent.com/kbsonlong/picgo-imgs/master/images/20220524130401.png><span class=header-title-text>蜷缩的蜗牛</span></a><span class=header-subtitle></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="搜索文章标题或内容 ..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/posts/><i class='fa-solid fa-archive fa-fw fa-sm'></i> 文章</a></li><li class=menu-item><a class=menu-link href=/categories/><i class='fa-solid fa-th fa-fw fa-sm'></i> 分类</a></li><li class=menu-item><a class=menu-link href=/tags/><i class='fa-solid fa-tags fa-fw fa-sm'></i> 标签</a></li><li class=menu-item><a class=menu-link href=/friends/ title=友情链接><i class='fa-solid fa-users fa-fw fa-sm'></i> 友链</a></li><li class=menu-item><a class=menu-link href=/about/><i class='fa-solid fa-info-circle fa-fw fa-sm'></i> 关于</a></li><li class="menu-item d-none-desktop text-center"><a class=menu-link href=https://github.com/kbsonlong/ title=GitHub rel="noopener noreffer" target=_blank><i class='fa-brands fa-github fa-fw'></i></a></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw"></i></li><li class="menu-item language"><span title=选择语言>简体中文<i class="dropdown-icon fa-solid fa-chevron-down"></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录 <i class="toc-icon fa-solid fa-angle-down fa-fw"></i></h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom></aside><article class="page single"><h1 class="single-title animate__animated animate__flipInX">通过Gateway API不断演变的Kubernetes网络</h1><div class=post-meta><div class=post-meta-line><span class=post-author><span class=author><img class="lazyload avatar" src=/svg/loading.min.svg data-src="https://gravatar.loli.net/avatar/598872715ec08296cf1e1806135cd518?s=32&d=mp" data-srcset="https://gravatar.loli.net/avatar/598872715ec08296cf1e1806135cd518?s=32&d=mp, https://gravatar.loli.net/avatar/598872715ec08296cf1e1806135cd518?s=32&d=mp 1.5x, https://gravatar.loli.net/avatar/598872715ec08296cf1e1806135cd518?s=32&d=mp 2x" data-sizes=auto alt=kbsonlong title=kbsonlong>&nbsp;kbsonlong</span></span></div><div class=post-meta-line><span title="2022-07-29 15:54:52"><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-07-29>2022-07-29</time>
+</span>&nbsp;<i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2258 字&nbsp;
+<i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div></div><div class="details toc" id=toc-static kept=false><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#引入-gateway-api>引入 Gateway API</a><ul><li><a href=#gateway-api-是什么样子的>Gateway API 是什么样子的？</a></li><li><a href=#网关控制器实现>网关控制器实现</a></li></ul></li><li><a href=#gateway-api-例子>Gateway API 例子</a><ul><li><a href=#路由和网关绑定>路由和网关绑定</a></li><li><a href=#行政委托>行政委托</a></li><li><a href=#面向角色的设计>面向角色的设计</a></li><li><a href=#尝试一下并参与其中>尝试一下，并参与其中</a></li><li><a href=#参考资料>参考资料</a></li></ul></li></ul></nav></div></div><div class=content id=content><p>Ingress 资源是 Kubernetes 众多成功故事之一。它创建了一个不同的 Ingress 控制器生态系统，这些控制器以标准化和一致的方式在成千上万的集群中使用。这种标准化帮助用户采用 Kubernetes。然而，在 Ingress 创建 5 年后，有迹象表明，分裂为不同但惊人相似的 CRD 和超载的注释。使 Ingress 普及的可移植性同样也限制了它的未来。</p><p>在 2019 年圣地亚哥 Kubecon 大会上，一群热情的贡献者聚集在一起讨论 Ingress 的演变。讨论蔓延到了街对面的酒店大厅，结果就是后来被称为 Gateway API 的东西。这一讨论是基于以下几个关键假设：</p><ol><li><p>作为路由匹配、流量管理和服务暴露基础的 API 标准已经商品化，作为自定义 API 对其实现者和用户几乎没有提供什么价值</p></li><li><p>可以通过共同的核心 API 资源来表示 L4/L7 路由和流量管理</p></li><li><p>以一种不牺牲核心 API 的用户体验的方式，为更复杂的功能提供可扩展性是可能的</p></li></ol><h2 id=引入-gateway-api>引入 Gateway API</h2><p>这就引出了允许 Gateway API 在 Ingress 基础上改进的设计原则：</p><ul><li><p>表达能力——除了 HTTP 主机/路径匹配和 TLS 之外，Gateway API 还可以表达 HTTP 头操作、流量加权和镜像、TCP/UDP 路由以及其他只能在 Ingress 中通过自定义注释才能实现的功能。</p></li><li><p>面向角色的设计——API 资源模型反映了在路由和 Kubernetes 服务网络中常见的职责分离。</p></li><li><p>可扩展性——资源允许在 API 的不同层上附加任意的配置。这使得在最合适的地方可以进行细粒度定制。</p></li><li><p>灵活的一致性——Gateway API 定义了不同的一致性级别——核心（强制支持）、扩展（如果支持则可移植）和自定义（没有可移植性保证），统称为灵活的一致性[1]。这促进了一个高度可移植的核心 API（如 Ingress），它仍然为网关控制器实现者提供灵活性。</p></li></ul><h3 id=gateway-api-是什么样子的>Gateway API 是什么样子的？</h3><p>Gateway API 引入了一些新的资源类型：</p><ul><li><p>GatewayClasses 是集群范围的资源，作为模板来显式定义从它们派生的 Gateways 的行为。这在概念上类似于 StorageClasses，但用于联网数据平面。</p></li><li><p>Gateways 是 GatewayClasses 的部署实例。它们是执行路由的数据平面的逻辑表示，可以是集群内代理、硬件 LB 或云 LB。</p></li><li><p>路由不是单一的资源，而是代表许多不同协议特定的 Route 资源。HTTPRoute 具有匹配、过滤和路由规则，这些规则应用于能够处理 HTTP 和 HTTPS 流量的 Gateways。类似地，TCPRoutes、UDPRoutes 和 TLSRoutes 也具有特定于协议的语义。此模型还允许 Gateway API 将来增量地扩展其协议支持。</p></li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src="https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTicty0ibCD5Ieou3L0W77KRPicgZBicYBjiav6EAibGPRKHky4za62LuicmALfnA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" data-srcset="https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTicty0ibCD5Ieou3L0W77KRPicgZBicYBjiav6EAibGPRKHky4za62LuicmALfnA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1, https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTicty0ibCD5Ieou3L0W77KRPicgZBicYBjiav6EAibGPRKHky4za62LuicmALfnA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1 1.5x, https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTicty0ibCD5Ieou3L0W77KRPicgZBicYBjiav6EAibGPRKHky4za62LuicmALfnA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1 2x" data-sizes=auto alt="https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTicty0ibCD5Ieou3L0W77KRPicgZBicYBjiav6EAibGPRKHky4za62LuicmALfnA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" title=图片></p><h3 id=网关控制器实现>网关控制器实现</h3><p>好消息是，尽管 Gateway 是在Alpha[2]阶段，但已经有几个你可以运行的Gateway 控制器实现[3]。由于它是一个标准化的规范，下面的示例可以在它们中的任何一个上运行，并且应该以完全相同的方式工作。查看入门手册[4]，了解如何安装和使用这些网关控制器之一。</p><h2 id=gateway-api-例子>Gateway API 例子</h2><p>在下面的例子中，我们将演示不同 API 资源之间的关系，并带你浏览一个常见的用例：</p><ul><li><p>团队 foo 将他们的应用部署在 foo 命名空间中。他们需要控制应用程序不同页面的路由逻辑。</p></li><li><p>团队 bar 运行在 bar 命名空间中。他们希望能够对他们的应用进行蓝绿发布以降低风险。</p></li><li><p>平台团队负责管理 Kubernetes 集群中所有应用的负载均衡器和网络安全。</p></li></ul><p>下面的 foo-route 对 foo 命名空间中的各种服务进行路径匹配，并且还有一个到 404 服务器的默认路由。这将分别通过 foo.example.com/login 和 foo.example.com/home 暴露 foo-auth 和 foo-home 服务：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>kind: HTTPRoute
+</span></span><span class=line><span class=cl>apiVersion: networking.x-k8s.io/v1alpha1
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: foo-route
+</span></span><span class=line><span class=cl>  namespace: foo
+</span></span><span class=line><span class=cl>  labels:
+</span></span><span class=line><span class=cl>    gateway: external-https-prod
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  hostnames:
+</span></span><span class=line><span class=cl>  - &#34;foo.example.com&#34;
+</span></span><span class=line><span class=cl>  rules:
+</span></span><span class=line><span class=cl>  - matches:
+</span></span><span class=line><span class=cl>    - path:
+</span></span><span class=line><span class=cl>        type: Prefix
+</span></span><span class=line><span class=cl>        value: /login
+</span></span><span class=line><span class=cl>    forwardTo:
+</span></span><span class=line><span class=cl>    - serviceName: foo-auth
+</span></span><span class=line><span class=cl>      port: 8080
+</span></span><span class=line><span class=cl>  - matches:
+</span></span><span class=line><span class=cl>    - path:
+</span></span><span class=line><span class=cl>        type: Prefix
+</span></span><span class=line><span class=cl>        value: /home
+</span></span><span class=line><span class=cl>    forwardTo:
+</span></span><span class=line><span class=cl>    - serviceName: foo-home
+</span></span><span class=line><span class=cl>      port: 8080
+</span></span><span class=line><span class=cl>  - matches:
+</span></span><span class=line><span class=cl>    - path:
+</span></span><span class=line><span class=cl>        type: Prefix
+</span></span><span class=line><span class=cl>        value: /
+</span></span><span class=line><span class=cl>    forwardTo:
+</span></span><span class=line><span class=cl>    - serviceName: foo-404
+</span></span><span class=line><span class=cl>      port: 8080
+</span></span></code></pre></td></tr></table></div></div><p>bar 团队在同一个 Kubernetes 集群的 bar 命名空间中操作，也希望将他们的应用程序暴露给互联网，但他们也希望控制自己的灰度和蓝绿发布。下面的 HTTPRoute 被配置为以下行为：</p><ul><li><p>bar.example.com 的流量：</p></li><li><p>将 90%的流量发送到 bar-v1</p></li><li><p>将 10%的流量发送给 bar-v2</p></li><li><p>对于使用 HTTP 头 env:canary 到 bar.example.com 的流量：</p></li><li><p>将所有流量发送到 bar-v2</p></li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src="https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTictgeVnETPtq36HWeH3Hf2HUfeaMCLZCOTYicVZTBGoCmQEfvHdvZmictiaw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" data-srcset="https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTictgeVnETPtq36HWeH3Hf2HUfeaMCLZCOTYicVZTBGoCmQEfvHdvZmictiaw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1, https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTictgeVnETPtq36HWeH3Hf2HUfeaMCLZCOTYicVZTBGoCmQEfvHdvZmictiaw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1 1.5x, https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTictgeVnETPtq36HWeH3Hf2HUfeaMCLZCOTYicVZTBGoCmQEfvHdvZmictiaw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1 2x" data-sizes=auto alt="https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTictgeVnETPtq36HWeH3Hf2HUfeaMCLZCOTYicVZTBGoCmQEfvHdvZmictiaw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" title=图片></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>kind: HTTPRoute
+</span></span><span class=line><span class=cl>apiVersion: networking.x-k8s.io/v1alpha1
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: bar-route
+</span></span><span class=line><span class=cl>  namespace: bar
+</span></span><span class=line><span class=cl>  labels:
+</span></span><span class=line><span class=cl>    gateway: external-https-prod
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  hostnames:
+</span></span><span class=line><span class=cl>  - &#34;bar.example.com&#34;
+</span></span><span class=line><span class=cl>  rules:
+</span></span><span class=line><span class=cl>  - forwardTo:
+</span></span><span class=line><span class=cl>    - serviceName: bar-v1
+</span></span><span class=line><span class=cl>      port: 8080
+</span></span><span class=line><span class=cl>      weight: 90
+</span></span><span class=line><span class=cl>    - serviceName: bar-v2
+</span></span><span class=line><span class=cl>      port: 8080
+</span></span><span class=line><span class=cl>      weight: 10
+</span></span><span class=line><span class=cl>  - matches:
+</span></span><span class=line><span class=cl>    - headers:
+</span></span><span class=line><span class=cl>        values:
+</span></span><span class=line><span class=cl>          env: canary
+</span></span><span class=line><span class=cl>    forwardTo:
+</span></span><span class=line><span class=cl>    - serviceName: bar-v2
+</span></span><span class=line><span class=cl>      port: 8080
+</span></span></code></pre></td></tr></table></div></div><h3 id=路由和网关绑定>路由和网关绑定</h3><p>因此，我们有两个匹配的 HTTPRoutes，并将流量路由到不同的服务。你可能想知道，在哪里可以访问这些服务？它们通过哪些网络或 IP 暴露？</p><p>路由如何向客户端暴露由路由绑定[5]来管理，该绑定描述了路由和网关之间如何创建双向关系。当 Routes 被绑定到一个 Gateway 时，这意味着它们的集合路由规则被配置在底层的负载均衡器或代理上，并且路由可以通过网关访问。因此，网关是可以通过路由配置的网络数据平面的逻辑表示。</p><p><img class=lazyload src=/svg/loading.min.svg data-src="https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTict5IN33XVPiaQDkMibzNkGDmjibUSkya44P5ZB2gsXTPjsm9MJFUaJWxtyw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" data-srcset="https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTict5IN33XVPiaQDkMibzNkGDmjibUSkya44P5ZB2gsXTPjsm9MJFUaJWxtyw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1, https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTict5IN33XVPiaQDkMibzNkGDmjibUSkya44P5ZB2gsXTPjsm9MJFUaJWxtyw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1 1.5x, https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTict5IN33XVPiaQDkMibzNkGDmjibUSkya44P5ZB2gsXTPjsm9MJFUaJWxtyw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1 2x" data-sizes=auto alt="https://mmbiz.qpic.cn/mmbiz_png/GpkQxibjhkJwBvJMF3973oiawUVU1rBTict5IN33XVPiaQDkMibzNkGDmjibUSkya44P5ZB2gsXTPjsm9MJFUaJWxtyw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" title=图片></p><h3 id=行政委托>行政委托</h3><p>Gateway 和 Route 资源之间的分离允许集群管理员将一些路由配置委派给各个团队，同时仍然保持集中控制。以下网关资源在端口 443 上暴露 HTTPS，并使用由集群管理员控制的证书终止端口上的所有通信流。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>kind: Gateway
+</span></span><span class=line><span class=cl>apiVersion: networking.x-k8s.io/v1alpha1
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: prod-web
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  gatewayClassName: acme-lb
+</span></span><span class=line><span class=cl>  listeners:
+</span></span><span class=line><span class=cl>  - protocol: HTTPS
+</span></span><span class=line><span class=cl>    port: 443
+</span></span><span class=line><span class=cl>    routes:
+</span></span><span class=line><span class=cl>      kind: HTTPRoute
+</span></span><span class=line><span class=cl>      selector:
+</span></span><span class=line><span class=cl>        matchLabels:
+</span></span><span class=line><span class=cl>          gateway: external-https-prod
+</span></span><span class=line><span class=cl>      namespaces:
+</span></span><span class=line><span class=cl>        from: All
+</span></span><span class=line><span class=cl>    tls:
+</span></span><span class=line><span class=cl>      certificateRef:
+</span></span><span class=line><span class=cl>        name: admin-controlled-cert
+</span></span></code></pre></td></tr></table></div></div><p>下面的 HTTPRoute 展示了 Route 如何通过它的 kind（HTTPRoute）和资源标签（gateway=external-https-prod）来确保它匹配网关的选择器。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># Matches the required kind selector on the Gateway
+</span></span><span class=line><span class=cl>kind: HTTPRoute
+</span></span><span class=line><span class=cl>apiVersion: networking.x-k8s.io/v1alpha1
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: foo-route
+</span></span><span class=line><span class=cl>  namespace: foo-ns
+</span></span><span class=line><span class=cl>  labels:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    # Matches the required label selector on the Gateway
+</span></span><span class=line><span class=cl>    gateway: external-https-prod
+</span></span><span class=line><span class=cl>...
+</span></span></code></pre></td></tr></table></div></div><h3 id=面向角色的设计>面向角色的设计</h3><p>当你将它们放在一起时，你就拥有了一个可以被多个团队安全地共享的负载平衡基础设施。Gateway API 不仅是用于高级路由的更具表现力的 API，而且是面向角色的 API，专为多租户基础设施设计。它的可扩展性确保了它将在保持可移植性的同时为未来的用例发展。最终，这些特性将允许 Gateway API 适应不同的组织模型和实现，直到未来。</p><h3 id=尝试一下并参与其中>尝试一下，并参与其中</h3><p>有许多资源可以查看以了解更多。</p><ul><li><p>查看入门手册，看看可以解决哪些用例。</p></li><li><p>尝试使用现有的网关控制器之一</p></li><li><p>或者参与[6]并帮助设计和影响 Kubernetes 服务网络的未来！</p></li></ul><h3 id=参考资料>参考资料</h3><p>[1]</p><p>灵活的一致性: <em><a href=https://gateway-api.sigs.k8s.io/concepts/guidelines/#conformance target=_blank rel="external nofollow noopener noreffer">https://gateway-api.sigs.k8s.io/concepts/guidelines/#conformance</a></em></p><p>[2]</p><p>Alpha: <em><a href=https://github.com/kubernetes-sigs/gateway-api/releases target=_blank rel="external nofollow noopener noreffer">https://github.com/kubernetes-sigs/gateway-api/releases</a></em></p><p>[3]</p><p>Gateway 控制器实现: <em><a href=https://gateway-api.sigs.k8s.io/references/implementations/ target=_blank rel="external nofollow noopener noreffer">https://gateway-api.sigs.k8s.io/references/implementations/</a></em></p><p>[4]</p><p>入门手册: <em><a href=https://gateway-api.sigs.k8s.io/guides/getting-started/ target=_blank rel="external nofollow noopener noreffer">https://gateway-api.sigs.k8s.io/guides/getting-started/</a></em></p><p>[5]</p><p>路由绑定: <em><a href=https://gateway-api.sigs.k8s.io/concepts/api-overview/#route-binding target=_blank rel="external nofollow noopener noreffer">https://gateway-api.sigs.k8s.io/concepts/api-overview/#route-binding</a></em></p><p>[6]</p><p>参与: <em><a href=https://gateway-api.sigs.k8s.io/contributing/community/ target=_blank rel="external nofollow noopener noreffer">https://gateway-api.sigs.k8s.io/contributing/community/</a></em></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2022-07-29 15:54:52">更新于 2022-07-29</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=/gateway-api/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=http://devops.alongparty.cn/gateway-api/ data-title="通过Gateway API不断演变的Kubernetes网络"><i class="fa-brands fa-twitter fa-fw"></i></a>
+<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=http://devops.alongparty.cn/gateway-api/><i class="fa-brands fa-facebook-square fa-fw"></i></a>
+<a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=http://devops.alongparty.cn/gateway-api/ data-title="通过Gateway API不断演变的Kubernetes网络" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a>
+<a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=http://devops.alongparty.cn/gateway-api/ data-title="通过Gateway API不断演变的Kubernetes网络"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a>
+<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=http://devops.alongparty.cn/gateway-api/ data-title="通过Gateway API不断演变的Kubernetes网络"><i class="fa-brands fa-weibo fa-fw"></i></a>
+<a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=http://devops.alongparty.cn/gateway-api/ data-title="通过Gateway API不断演变的Kubernetes网络" data-description><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a>
+<a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=http://devops.alongparty.cn/gateway-api/ data-title="通过Gateway API不断演变的Kubernetes网络" data-description><i class="fa-brands fa-blogger fa-fw"></i></a>
+<a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=http://devops.alongparty.cn/gateway-api/ data-title="通过Gateway API不断演变的Kubernetes网络"><i class="fa-brands fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/kubebuilder%E5%BC%80%E5%8F%91operator/ class=prev rel=prev title=Kubebuilder开发简单的Operator><i class="fa-solid fa-angle-left fa-fw"></i>Kubebuilder开发简单的Operator</a>
+<a href=/%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%BC%B9%E6%80%A7%E4%BC%B8%E7%BC%A9%E5%92%8C%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%BE/ class=next rel=next title=[转载]企业级弹性伸缩和优化建设>[转载]企业级弹性伸缩和优化建设<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=giscus><script src=https://giscus.app/client.js data-repo=kbsonlong/devops.alongparty.cn data-repo-id=R_kgDOHE7F-Q data-category=Announcements data-category-id=DIC_kwDOHE7F-c4CPP5J data-mapping=title data-theme=preferred_color_scheme data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-lang=zh-CN data-loading=lazy crossorigin=anonymous async defer></script><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/ rel="external nofollow noopener noreffer">giscus</a>.</noscript></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line copyright"><i class="fa-regular fa-copyright fa-fw"></i>
+<span itemprop=copyrightYear>2018 - 2022</span><span class=author itemprop=copyrightHolder>
+<a href=/>kbsonlong</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div><div class="footer-line statistics"></div><div class="footer-line ibruce"><span id=busuanzi_container_site_uv title=总访客数><i class="fa-regular fa-user fa-fw"></i>&nbsp;<span id=busuanzi_value_site_uv><i class="fa fa-spinner fa-spin fa-fw"></i></span></span><span id=busuanzi_container_site_pv class=footer-divider title=总访问量><i class="fa-regular fa-eye fa-fw"></i>&nbsp;<span id=busuanzi_value_site_pv><i class="fa fa-spinner fa-spin fa-fw"></i></span></span></div><div class="footer-line beian"><span class="icp footer-divider"><a target=_blank href=https://beian.miit.gov.cn/>粤ICP备18122209号</a></span></div></div></footer></div><div class=widgets><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fa-solid fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fa-solid fa-comment fa-fw"></i></a></div><a href=https://github.com/kbsonlong title="在 GitHub 上查看源代码" target=_blank rel="external nofollow noopener noreffer" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div></div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js defer></script><script type=text/javascript src=/lib/algoliasearch/algoliasearch-lite.umd.min.js defer></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js async defer></script><script type=text/javascript src=/lib/sharer/sharer.min.js async defer></script><script type=text/javascript src=/lib/katex/katex.min.js defer></script><script type=text/javascript src=/lib/katex/auto-render.min.js defer></script><script type=text/javascript src=/lib/katex/copy-tex.min.js defer></script><script type=text/javascript src=/lib/katex/mhchem.min.js defer></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js defer></script><script type=text/javascript src=/lib/pangu/pangu.min.js defer></script><script type=text/javascript src=/lib/cell-watermark/watermark.min.js defer></script><script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async defer></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{giscus:{darkTheme:"dark",lightTheme:"light"}},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},enablePWA:!0,enablePangu:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"WFOR67TML1",algoliaIndex:"index.zh-cn",algoliaSearchKey:"ea1fe535f9a7ae353f3922489c829cc1",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"},watermark:{content:'\u003cimg class="fixit-icon" src="/favicon-16x16.png" alt="FixIt logo" /\u003e FixIt 主题',enable:!0,height:21,opacity:.0125}}</script><script type=text/javascript src=/js/theme.min.js defer></script><script type=text/javascript src=/js/_custom.min.js defer></script></body></html>
