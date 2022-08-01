@@ -1,3 +1,4 @@
+http://devops.alongparty.cn/gateway-api/
 http://devops.alongparty.cn/kubebuilder%E5%BC%80%E5%8F%91operator/
 http://devops.alongparty.cn/s2i%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9E%84%E5%BB%BA%E5%99%A8%E5%92%8C%E6%A8%A1%E6%9D%BF/
 http://devops.alongparty.cn/ocserv%E9%83%A8%E7%BD%B2/
